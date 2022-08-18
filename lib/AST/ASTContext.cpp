@@ -4679,19 +4679,14 @@ GenericEnvironment::forOpenedExistential(
     Type existential, GenericSignature parentSig, UUID uuid) {
   auto &ctx = existential->getASTContext();
   auto signature = ctx.getOpenedArchetypeSignature(existential, parentSig);
-  return GenericEnvironment::forOpenedArchetypeSignature(existential, signature, uuid);
-}
 
-GenericEnvironment *GenericEnvironment::forOpenedArchetypeSignature(
-    Type existential, GenericSignature signature, UUID uuid) {
   // Allocate and construct the new environment.
-  auto &ctx = existential->getASTContext();
   unsigned numGenericParams = signature.getGenericParams().size();
   size_t bytes = totalSizeToAlloc<OpaqueTypeDecl *, SubstitutionMap,
                                   OpenedGenericEnvironmentData, Type>(
       0, 0, 1, numGenericParams);
   void *mem = ctx.Allocate(bytes, alignof(GenericEnvironment));
-  return new (mem) GenericEnvironment(signature, existential, uuid);
+  return new (mem) GenericEnvironment(signature, existential, parentSig, uuid);
 }
 
 /// Create a new generic environment for an opaque type with the given set of
@@ -5340,9 +5335,8 @@ ASTContext::getOverrideGenericSignature(const ValueDecl *base,
     };
 
     for (auto reqt : baseGenericSig.getRequirements()) {
-      if (auto substReqt = reqt.subst(substFn, lookupConformanceFn)) {
-        addedRequirements.push_back(*substReqt);
-      }
+      auto substReqt = reqt.subst(substFn, lookupConformanceFn);
+      addedRequirements.push_back(substReqt);
     }
   }
 
