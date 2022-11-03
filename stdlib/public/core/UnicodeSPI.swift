@@ -145,7 +145,7 @@ extension Unicode.Scalar.Properties {
   @available(SwiftStdlib 5.7, *)
   public var _scriptExtensions: [UInt8] {
     var count: UInt8 = 0
-    let pointer = _swift_stdlib_getScriptExtensions(_scalar.value, &count)
+    let pointer = _swiftCore_stdlib_getScriptExtensions(_scalar.value, &count)
 
     guard let pointer = pointer else {
       return [_script]
