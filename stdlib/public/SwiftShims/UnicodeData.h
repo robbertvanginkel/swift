@@ -108,7 +108,7 @@ SWIFT_RUNTIME_STDLIB_INTERNAL
 __swift_uint8_t _swift_stdlib_getGeneralCategory(__swift_uint32_t scalar);
 
 SWIFT_RUNTIME_STDLIB_INTERNAL
-__swift_uint8_t _swift_stdlib_getScript(__swift_uint32_t scalar);
+__swift_uint8_t _swiftCore_stdlib_getScript(__swift_uint32_t scalar);
 
 SWIFT_RUNTIME_STDLIB_INTERNAL
 const __swift_uint8_t *_swiftCore_stdlib_getScriptExtensions(

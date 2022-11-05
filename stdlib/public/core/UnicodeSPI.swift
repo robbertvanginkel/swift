@@ -134,7 +134,7 @@ extension Unicode.Scalar.Properties {
   @_spi(_Unicode)
   @available(SwiftStdlib 5.7, *)
   public var _script: UInt8 {
-    let rawValue = _swift_stdlib_getScript(_scalar.value)
+    let rawValue = _swiftCore_stdlib_getScript(_scalar.value)
 
     _internalInvariant(rawValue != .max, "Unknown script rawValue")
 
